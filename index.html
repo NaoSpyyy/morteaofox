@@ -1,0 +1,2063 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCIENTIFIC ARCHIVE — SCD-MNEMOSYNE-INT-003 — SITE-22</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root {
+    --bg: #10110f;
+    --paper: #dcd9ce;
+    --ink: #171814;
+    --muted: #65665e;
+    --line: #8b8c82;
+    --red: #8e2724;
+    --blue: #374c52;
+    --mono: "DM Mono", monospace;
+    --serif: "Libre Baskerville", Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        #10110f;
+    background-size: 32px 32px;
+    color: #d8d7cf;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,255,255,.045),
+            transparent 45%
+        );
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30312d;
+    background: rgba(14,15,13,.94);
+    z-index: 100;
+}
+
+.top-left {
+    width: 285px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-left: 22px;
+    border-right: 1px solid #30312d;
+}
+
+.scp-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: .9;
+}
+
+.scp-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #eeeeea;
+}
+
+.scp-subtitle {
+    margin-top: 3px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #777871;
+    letter-spacing: 1px;
+}
+
+.top-center {
+    flex: 1;
+    padding-left: 28px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #686a64;
+    letter-spacing: 1px;
+}
+
+.top-center span {
+    color: #a9aaa3;
+}
+
+.clock {
+    width: 180px;
+    padding-right: 25px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #8b8c85;
+    letter-spacing: 1px;
+}
+
+.archive {
+    position: fixed;
+    top: 62px;
+    left: 0;
+    bottom: 0;
+    width: 285px;
+    padding: 35px 23px;
+    border-right: 1px solid #30312d;
+    background: rgba(13,14,12,.78);
+    z-index: 50;
+}
+
+.archive-label {
+    margin-bottom: 28px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #696a64;
+    letter-spacing: 2px;
+}
+
+.archive-file {
+    position: relative;
+    display: block;
+    padding: 14px 12px 15px 15px;
+    margin-bottom: 8px;
+    border-left: 1px solid #393a35;
+    color: #7c7e76;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        color .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.archive-file:hover {
+    color: #d0d0c9;
+    border-left-color: #a72e2e;
+    background: rgba(255,255,255,.018);
+}
+
+.archive-file.active {
+    color: #ecebe5;
+    border-left-color: #a72e2e;
+    background: rgba(255,255,255,.025);
+}
+
+.archive-number {
+    display: block;
+    margin-bottom: 7px;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: #5f605a;
+    letter-spacing: 1px;
+}
+
+.archive-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.archive-status {
+    position: absolute;
+    right: 12px;
+    top: 15px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #74766f;
+}
+
+.archive-file.active .archive-status {
+    background: #a72e2e;
+    box-shadow: 0 0 8px rgba(167,46,46,.5);
+}
+
+main {
+    margin-left: 285px;
+    padding-top: 62px;
+    padding-bottom: 100px;
+}
+
+.document {
+    position: relative;
+    width: min(930px, calc(100vw - 350px));
+    margin: 75px auto 140px;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 1100px;
+    overflow: hidden;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.38),
+        0 2px 8px rgba(0,0,0,.2);
+}
+
+.document::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 4px,
+            rgba(0,0,0,.012) 5px
+        );
+    z-index: 10;
+}
+
+.paper-inner {
+    position: relative;
+    padding: 76px 88px 100px;
+    z-index: 2;
+}
+
+.doc-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    margin-bottom: 75px;
+}
+
+.doc-meta-left {
+    line-height: 1.8;
+}
+
+.doc-meta-right {
+    text-align: right;
+    line-height: 1.8;
+}
+
+.document-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.12;
+    max-width: 680px;
+    letter-spacing: -.025em;
+}
+
+.document-subtitle {
+    margin-top: 17px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+
+.rule {
+    display: flex;
+    align-items: center;
+    margin: 52px 0 58px;
+    gap: 12px;
+}
+
+.rule::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--red);
+    flex-shrink: 0;
+}
+
+.rule::after {
+    content: "";
+    height: 1px;
+    background: var(--line);
+    flex: 1;
+}
+
+.metadata {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 60px;
+    margin-bottom: 65px;
+}
+
+.meta-item {
+    border-top: 1px solid var(--line);
+    padding-top: 9px;
+    margin-bottom: 22px;
+}
+
+.meta-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.meta-value {
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.content {
+    max-width: 660px;
+}
+
+h2 {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 53px 0 17px;
+    color: var(--red);
+}
+
+h2::before {
+    content: "§ ";
+    color: var(--muted);
+}
+
+h3 {
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: 700;
+    margin: 34px 0 12px;
+    color: var(--ink);
+}
+
+p {
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.9;
+    margin: 0 0 17px;
+    text-align: left;
+}
+
+ul {
+    margin: 0 0 22px;
+    padding: 0;
+    list-style: none;
+}
+
+li {
+    position: relative;
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.8;
+    margin-bottom: 11px;
+    padding-left: 26px;
+}
+
+li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+}
+
+li strong {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .02em;
+}
+
+.note {
+    position: relative;
+    margin: 30px 0 32px;
+    padding: 15px 20px 15px 23px;
+    border-left: 2px solid var(--blue);
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.75;
+    color: #343936;
+    background: rgba(55,76,82,.045);
+}
+
+.note::before {
+    content: "KC / PERSONAL NOTE";
+    display: block;
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: .12em;
+    color: var(--blue);
+    margin-bottom: 8px;
+}
+
+.cross-reference {
+    margin: 45px -20px;
+    padding: 17px 20px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.7;
+    color: #55564f;
+}
+
+.cross-reference strong {
+    color: var(--red);
+    font-weight: 500;
+}
+
+.data-table {
+    width: 100%;
+    margin: 28px 0 34px;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid #aaa99e;
+    border-collapse: collapse;
+}
+
+.data-table th {
+    font-family: var(--mono);
+    font-size: 8px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    text-align: left;
+    padding: 10px 8px 10px 0;
+    border-bottom: 1px solid var(--ink);
+}
+
+.data-table td {
+    font-family: var(--serif);
+    font-size: 12px;
+    line-height: 1.6;
+    padding: 10px 8px 10px 0;
+    border-bottom: 1px solid #aaa99e;
+    vertical-align: top;
+}
+
+.data-table td.num,
+.data-table th.num {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.data-table tr.total td {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    border-bottom: none;
+    border-top: 1px solid var(--ink);
+}
+
+.result {
+    margin-top: 65px;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+}
+
+.result-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    border-bottom: 1px solid #aaa99e;
+    padding: 10px 0;
+    font-family: var(--serif);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.result-row span:first-child {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+}
+
+.signature {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+}
+
+.signature-name {
+    font-family: var(--serif);
+    font-size: 14px;
+}
+
+.signature-meta {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+    text-align: right;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 35px;
+    right: 55px;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: #77786f;
+}
+
+.document-separator {
+    width: min(930px, calc(100vw - 350px));
+    margin: -75px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #555650;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.document-separator::before,
+.document-separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #30312d;
+}
+
+@media (max-width: 900px) {
+    .archive {
+        display: none;
+    }
+
+    .top-left {
+        width: auto;
+        border-right: none;
+    }
+
+    .top-center {
+        display: none;
+    }
+
+    .clock {
+        margin-left: auto;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .document,
+    .document-separator {
+        width: calc(100vw - 34px);
+    }
+
+    .document {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    .paper-inner {
+        padding: 45px 28px 75px;
+    }
+
+    .document-title {
+        font-size: 31px;
+    }
+
+    .metadata {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    p {
+        font-size: 13px;
+    }
+
+    .result-row {
+        grid-template-columns: 95px 1fr;
+    }
+
+    .doc-meta {
+        display: block;
+    }
+
+    .doc-meta-right {
+        margin-top: 15px;
+        text-align: left;
+    }
+
+    .data-table th,
+    .data-table td {
+        font-size: 10px;
+        padding-right: 6px;
+    }
+}
+</style>
+<base target="_blank">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="top-left">
+        <img
+            src="logo22.png"
+            class="scp-logo"
+            alt="SCP Foundation"
+        >
+
+        <div>
+            <div class="scp-title">
+                SCP FOUNDATION
+            </div>
+
+            <div class="scp-subtitle">
+                SITE-22 · SCIENTIFIC DEPARTMENT
+            </div>
+        </div>
+    </div>
+
+    <div class="top-center">
+        ARCHIVE / SITE-22 / SCIENTIFIC / <span>SCD-MNEMOSYNE-INT-003</span>
+    </div>
+
+    <div class="clock" id="clock">
+        --:--:--
+    </div>
+</header>
+
+<aside class="archive">
+    <div class="archive-label">
+        SITE-22 / CASE FILE
+    </div>
+
+    <div
+        class="archive-file active"
+        data-target="mnemosyne-1"
+        onclick="scrollToDoc('mnemosyne-1')"
+    >
+        <span class="archive-number">
+            01 / 03
+        </span>
+
+        <span class="archive-name">
+            MNEMOSYNE-INT-003 — Visão geral e classes
+        </span>
+
+        <span class="archive-status"></span>
+    </div>
+
+    <div
+        class="archive-file"
+        data-target="mnemosyne-2"
+        onclick="scrollToDoc('mnemosyne-2')"
+    >
+        <span class="archive-number">
+            02 / 03
+        </span>
+
+        <span class="archive-name">
+            MNEMOSYNE-INT-003 — Organização e operação
+        </span>
+
+        <span class="archive-status"></span>
+    </div>
+
+    <div
+        class="archive-file"
+        data-target="mnemosyne-3"
+        onclick="scrollToDoc('mnemosyne-3')"
+    >
+        <span class="archive-number">
+            03 / 03
+        </span>
+
+        <span class="archive-name">
+            MNEMOSYNE-INT-003 — Orçamento e cronograma
+        </span>
+
+        <span class="archive-status"></span>
+    </div>
+</aside>
+
+<main>
+
+<article class="document" id="mnemosyne-1">
+<div class="paper-inner">
+
+    <div class="doc-meta">
+        <div class="doc-meta-left">
+            SITE-22 / SCIENTIFIC DEPARTMENT<br>
+            INTERNAL RECORD<br>
+            PROJETO MNEMOSYNE
+        </div>
+
+        <div class="doc-meta-right">
+            SCD-MNEMOSYNE-INT-003<br>
+            CLASSIFICAÇÃO: NÍVEL 2 — ACESSO RESTRITO<br>
+            STATUS: EM DESENVOLVIMENTO
+        </div>
+    </div>
+
+    <h1 class="document-title">
+        Departamento<br>
+        Científico —<br>
+        Projeto Mnemosyne
+    </h1>
+
+    <div class="document-subtitle">
+        Estrutura de pesquisa, desenvolvimento, armazenamento e
+        administração de agentes mnemônicos
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="metadata">
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Documento
+            </div>
+
+            <div class="meta-value">
+                SCD-MNEMOSYNE-INT-003
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Classificação
+            </div>
+
+            <div class="meta-value">
+                Nível 2 — Acesso Restrito
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Data
+            </div>
+
+            <div class="meta-value">
+                17/10/2026
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Responsável atual
+            </div>
+
+            <div class="meta-value">
+                Kade Connors
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Estado
+            </div>
+
+            <div class="meta-value">
+                Em desenvolvimento
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Prioridade
+            </div>
+
+            <div class="meta-value">
+                Média
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <h2>I. Descrição do projeto</h2>
+
+        <p>
+            O Projeto Mnemosyne tem como finalidade estabelecer uma
+            estrutura de pesquisa, desenvolvimento, armazenamento e
+            administração de agentes mnemônicos no Site-22. O projeto
+            abrange a avaliação das diferentes classes, a organização das
+            instalações e dos recursos necessários, o acompanhamento dos
+            resultados e a definição das próximas etapas de desenvolvimento.
+        </p>
+
+        <p>
+            Durante a fase inicial, a coordenação do projeto ficará sob
+            minha responsabilidade. Isso compreende a organização das
+            pesquisas, a distribuição dos recursos disponíveis, a definição
+            das prioridades, o acompanhamento das atividades e a avaliação
+            dos resultados apresentados. Também ficarão sob minha coordenação
+            o planejamento financeiro, a organização das solicitações
+            recebidas e a atualização das necessidades operacionais de cada
+            etapa.
+        </p>
+
+        <p>
+            Essa configuração será mantida enquanto o projeto estiver em sua
+            fase inicial. Conforme o Mnemosyne se desenvolver, a estrutura de
+            coordenação poderá ser revista, com a possibilidade de distribuir
+            responsabilidades adicionais entre os funcionários envolvidos ou
+            estabelecer uma organização própria para as atividades que
+            exigirem acompanhamento contínuo.
+        </p>
+
+        <p>
+            O desenvolvimento inicial será concentrado na Classe A. As
+            Classes C, W e X serão mantidas como linhas complementares, com
+            objetivos e necessidades técnicas próprios. As demais classes
+            permanecerão documentadas para consulta e planejamento de futuras
+            expansões.
+        </p>
+
+        <p>
+            O projeto será estruturado de modo que pesquisa, disponibilidade
+            e distribuição sejam acompanhadas separadamente. Dessa forma,
+            será possível desenvolver novas capacidades sem comprometer a
+            organização dos recursos que já estiverem disponíveis para o
+            Site-22.
+        </p>
+
+        <h2>II. Classes em desenvolvimento</h2>
+
+        <h3>Classe A — Retrógrado Geral</h3>
+
+        <p>
+            Destinada à remoção de lembranças episódicas recentes ou
+            específicas, a Classe A será o primeiro agente avaliado pelo
+            projeto. Seu funcionamento está associado à reconsolidação da
+            memória, com maior influência sobre lembranças recentes ou
+            reativadas. Em determinadas condições, a janela de
+            reconsolidação pode ser reaberta, permitindo que lembranças
+            antigas também sejam abordadas.
+        </p>
+
+        <p>
+            O desenvolvimento inicial será direcionado à avaliação de suas
+            características, limitações, estabilidade e efeitos observáveis.
+            A Classe A servirá como referência para estruturar os registros
+            de pesquisa, a administração de estoque e o sistema de
+            solicitações do Mnemosyne.
+        </p>
+
+        <p>
+            A conclusão dessa etapa permitirá estabelecer uma base de
+            comparação para as classes seguintes e determinar quais recursos
+            deverão ser priorizados na continuidade do projeto.
+        </p>
+
+        <h3>Classe C — Retrógrado Direcionado</h3>
+
+        <p>
+            A Classe C destina-se à remoção seletiva de lembranças
+            específicas, independentemente de quando foram formadas. Sua
+            aplicação depende de recursos especializados de neuroimagem e
+            estimulação transcraniana, empregados para identificar e alcançar
+            as representações neurais associadas à memória pretendida.
+        </p>
+
+        <p>
+            Devido às exigências técnicas, essa classe será desenvolvida em
+            uma linha separada, com planejamento próprio de infraestrutura,
+            pessoal e orçamento. A prioridade será determinar a viabilidade
+            da capacidade dentro do Site-22 e identificar os recursos
+            necessários para sua futura avaliação.
+        </p>
+
+        <p>
+            A preparação dessa linha poderá avançar paralelamente à
+            avaliação da Classe A, desde que os custos e as necessidades de
+            infraestrutura sejam acompanhados separadamente.
+        </p>
+
+        <h3>Classe W — Resistência Antimemética</h3>
+
+        <p>
+            A Classe W permite perceber e reter informações relacionadas a
+            antimemes, além de aprimorar a memória geral. Seu desenvolvimento
+            será direcionado à preservação de informações durante ocorrências
+            nas quais fenômenos antimeméticos comprometam a percepção ou a
+            recordação dos envolvidos.
+        </p>
+
+        <p>
+            A disponibilidade será planejada conforme as necessidades das
+            pesquisas e das equipes que lidam com ocorrências antimeméticas.
+            Sua avaliação também deverá considerar a compatibilidade com os
+            procedimentos de registro e preservação de informações utilizados
+            pelo Site-22.
+        </p>
+
+        <h3>Classe X — Recuperação Mnemônica</h3>
+
+        <p>
+            A Classe X está associada à recuperação da consciência de
+            antimemes anteriormente percebidos ou de lembranças suprimidas.
+            Sua avaliação será conduzida separadamente, com atenção à
+            recuperação de informações e à verificação de sua precisão.
+        </p>
+
+        <p>
+            O desenvolvimento dessa classe dependerá da capacidade de
+            avaliar os resultados e distinguir a recuperação de lembranças
+            de alterações na percepção ou na interpretação dos
+            acontecimentos.
+        </p>
+
+        <p>
+            Por exigir uma avaliação específica de seus efeitos, a Classe X
+            permanecerá como uma linha complementar, com recursos e
+            cronograma próprios.
+        </p>
+
+        <h2>III. Catálogo complementar</h2>
+
+        <p>
+            As demais classes serão mantidas na documentação técnica para
+            consulta e planejamento.
+        </p>
+
+        <ul>
+            <li>
+                <strong>Classe B — Retrógrado Regressivo:</strong>
+                remove lembranças a partir das mais recentes, avançando
+                progressivamente para períodos anteriores.
+            </li>
+
+            <li>
+                <strong>Classe D — Retrógrado Progressivo:</strong>
+                atua a partir das lembranças mais antigas, avançando em
+                direção às mais recentes.
+            </li>
+
+            <li>
+                <strong>Classe E — Ennui:</strong>
+                reduz a associação emocional com lembranças anômalas,
+                alterando a resposta emocional do indivíduo diante delas.
+            </li>
+
+            <li>
+                <strong>Classe F — Fugue:</strong>
+                está associada à perda de lembranças autobiográficas e a
+                alterações relacionadas à identidade pessoal.
+            </li>
+
+            <li>
+                <strong>Classe G — Gaslighting:</strong>
+                altera a percepção de autenticidade das lembranças, fazendo
+                com que acontecimentos recordados pareçam irreais,
+                fantasiosos ou semelhantes a sonhos.
+            </li>
+
+            <li>
+                <strong>Classe H — Anterógrado:</strong>
+                interfere na formação de novas memórias durante o período
+                de efeito.
+            </li>
+
+            <li>
+                <strong>Classe I — Transitório:</strong>
+                bloqueia temporariamente o acesso a lembranças de longo
+                prazo.
+            </li>
+        </ul>
+
+        <p>
+            As classes mnésticas serão mantidas em um catálogo separado:
+        </p>
+
+        <ul>
+            <li>
+                <strong>Classe W:</strong>
+                resistência antimemética e aprimoramento geral da memória.
+            </li>
+
+            <li>
+                <strong>Classe X:</strong>
+                recuperação da consciência de antimemes ou lembranças
+                suprimidas.
+            </li>
+
+            <li>
+                <strong>Classe Y:</strong>
+                recordação extremamente precisa das memórias adquiridas
+                durante seu efeito.
+            </li>
+
+            <li>
+                <strong>Classe Z:</strong>
+                incapacidade de esquecer, acompanhada de consequências
+                fatais.
+            </li>
+        </ul>
+
+        <p>
+            As Classes Y e Z permanecerão fora das prioridades atuais. Sua
+            inclusão documental serve para manter o catálogo completo e
+            registrar possíveis necessidades futuras.
+        </p>
+
+        <p>
+            A presença de uma classe no catálogo não significa que ela esteja
+            desenvolvida, disponível ou liberada para utilização. O estado de
+            cada linha será atualizado conforme o avanço do projeto.
+        </p>
+
+        <div class="cross-reference">
+            <strong>
+                CROSS-REFERENCE / SCD-MNEMOSYNE-INT-003 — PÁGINA 02
+            </strong>
+
+            <br>
+
+            A organização funcional do Mnemosyne, o sistema de solicitação
+            e liberação de agentes, a distribuição entre os departamentos e
+            os estados de desenvolvimento encontram-se no documento
+            seguinte deste arquivo.
+        </div>
+
+        <div class="signature">
+            <div class="signature-name">
+                Kade Connors
+            </div>
+
+            <div class="signature-meta">
+                SITE-22 · SCIENTIFIC DEPARTMENT<br>
+                RESPONSÁVEL ATUAL PELO PROJETO MNEMOSYNE
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-number">
+        01 / 03
+    </div>
+
+</div>
+</article>
+
+<div class="document-separator">
+    NEXT DOCUMENT / SAME CASE
+</div>
+
+<article class="document" id="mnemosyne-2">
+<div class="paper-inner">
+
+    <div class="doc-meta">
+        <div class="doc-meta-left">
+            SITE-22 / SCIENTIFIC DEPARTMENT<br>
+            INTERNAL RECORD<br>
+            PROJETO MNEMOSYNE
+        </div>
+
+        <div class="doc-meta-right">
+            SCD-MNEMOSYNE-INT-003<br>
+            CLASSIFICAÇÃO: NÍVEL 2 — ACESSO RESTRITO<br>
+            STATUS: EM DESENVOLVIMENTO
+        </div>
+    </div>
+
+    <h1 class="document-title">
+        Mnemosyne —<br>
+        Organização e<br>
+        Operação
+    </h1>
+
+    <div class="document-subtitle">
+        Áreas funcionais, solicitação e liberação de agentes, distribuição
+        e estados de desenvolvimento
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="metadata">
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Documento
+            </div>
+
+            <div class="meta-value">
+                SCD-MNEMOSYNE-INT-003
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Data
+            </div>
+
+            <div class="meta-value">
+                17/10/2026
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Responsável atual
+            </div>
+
+            <div class="meta-value">
+                Kade Connors
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Prioridade
+            </div>
+
+            <div class="meta-value">
+                Média
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <h2>IV. Organização e funcionamento do Mnemosyne</h2>
+
+        <p>
+            O Mnemosyne será organizado em cinco áreas funcionais:
+        </p>
+
+        <ul>
+            <li>
+                <strong>1. Pesquisa e desenvolvimento</strong> —
+                responsável pela avaliação das classes, documentação dos
+                resultados, identificação das limitações e definição das
+                necessidades técnicas de cada linha.
+            </li>
+
+            <li>
+                <strong>2. Controle de materiais e estoque</strong> —
+                responsável pela identificação dos lotes, registro das
+                quantidades, acompanhamento das condições de armazenamento
+                e atualização da disponibilidade dos agentes.
+            </li>
+
+            <li>
+                <strong>3. Gestão de solicitações</strong> —
+                responsável por receber os pedidos dos departamentos,
+                registrar as justificativas, verificar a disponibilidade e
+                encaminhar as solicitações para decisão.
+            </li>
+
+            <li>
+                <strong>4. Administração e orçamento</strong> —
+                responsável por acompanhar despesas, organizar aquisições,
+                registrar custos recorrentes e preparar estimativas para a
+                expansão do projeto.
+            </li>
+
+            <li>
+                <strong>5. Documentação e avaliação</strong> —
+                responsável pela organização dos relatórios, consolidação
+                dos resultados e manutenção do histórico administrativo e
+                técnico.
+            </li>
+        </ul>
+
+        <p>
+            Essas áreas representam funções do próprio projeto e não exigem
+            a criação imediata de cinco departamentos independentes. A
+            distribuição das tarefas será feita conforme a equipe disponível
+            e poderá ser ajustada durante a implantação.
+        </p>
+
+        <p>
+            Enquanto a coordenação permanecer sob minha responsabilidade,
+            caberá a mim organizar as atividades, distribuir os recursos,
+            definir as prioridades e acompanhar o desenvolvimento das
+            diferentes linhas de pesquisa. A eventual delegação de tarefas
+            será feita conforme a necessidade operacional, preservando a
+            continuidade do trabalho e a identificação dos responsáveis por
+            cada atividade.
+        </p>
+
+        <p>
+            Caso o crescimento do projeto justifique uma mudança de
+            estrutura, as responsabilidades poderão ser redistribuídas sem
+            interromper as pesquisas ou o funcionamento do sistema de
+            solicitações.
+        </p>
+
+        <h2>V. Solicitação e liberação de agentes</h2>
+
+        <p>
+            Os departamentos interessados deverão encaminhar uma solicitação
+            contendo a classe pretendida, a finalidade, a quantidade
+            necessária, a unidade responsável e o incidente ou atividade
+            relacionado ao pedido.
+        </p>
+
+        <p>
+            A solicitação será registrada e avaliada conforme quatro critérios
+            principais: finalidade institucional, estado de desenvolvimento
+            da classe, disponibilidade de estoque e condições necessárias
+            para a utilização.
+        </p>
+
+        <p>
+            Após a avaliação, o pedido receberá uma das seguintes
+            classificações:
+        </p>
+
+        <ul>
+            <li>
+                <strong>Liberado:</strong>
+                a solicitação atende às condições estabelecidas para a classe
+                e existe disponibilidade para atendimento.
+            </li>
+
+            <li>
+                <strong>Liberado com restrições:</strong>
+                a solicitação poderá ser atendida mediante condições
+                adicionais de acompanhamento, documentação ou supervisão.
+            </li>
+
+            <li>
+                <strong>Pendente:</strong>
+                são necessárias informações adicionais, recursos ainda
+                indisponíveis ou uma avaliação complementar.
+            </li>
+
+            <li>
+                <strong>Recusado:</strong>
+                a solicitação não apresenta justificativa suficiente ou não
+                corresponde às condições de utilização da classe.
+            </li>
+        </ul>
+
+        <p>
+            A decisão será registrada no sistema do Mnemosyne, acompanhada
+            da justificativa e da identificação do responsável. A
+            autorização será vinculada ao pedido correspondente e não
+            poderá ser automaticamente transferida para outra atividade.
+        </p>
+
+        <p>
+            A liberação de um agente para uma pesquisa não o tornará
+            disponível para distribuição operacional geral. Da mesma forma,
+            a existência de estoque não implicará autorização automática
+            para utilização.
+        </p>
+
+        <p>
+            As decisões rotineiras serão tomadas pela coordenação do
+            projeto. Situações urgentes poderão receber avaliação
+            prioritária, desde que a justificativa, a decisão e a
+            movimentação dos materiais sejam documentadas. A revisão
+            posterior será utilizada para verificar a conformidade do
+            procedimento e atualizar os critérios internos, quando
+            necessário.
+        </p>
+
+        <p>
+            A coordenação também manterá um histórico das solicitações,
+            permitindo identificar os departamentos com maior demanda, os
+            tipos de ocorrência mais frequentes e as classes que exigem
+            maior investimento. Esses dados servirão de base para o
+            planejamento de estoque e a distribuição futura dos recursos.
+        </p>
+
+        <h2>VI. Distribuição entre os departamentos</h2>
+
+        <p>
+            A distribuição será organizada conforme a finalidade
+            institucional e a prioridade das solicitações, considerando
+            também a quantidade disponível e as necessidades das atividades
+            em andamento.
+        </p>
+
+        <p>
+            O Departamento de Segurança e Inteligência poderá solicitar
+            agentes relacionados a ocorrências envolvendo exposição de
+            informações confidenciais. A SCD manterá recursos destinados às
+            pesquisas e avaliações internas. Outras unidades do Site-22
+            poderão apresentar pedidos quando houver uma necessidade
+            compatível com a classe pretendida.
+        </p>
+
+        <p>
+            Cada unidade destinatária deverá indicar um responsável pelo
+            recebimento e pela guarda dos materiais. A distribuição será
+            registrada com a identificação da classe, do lote, da
+            quantidade, do departamento, da finalidade declarada e da
+            pessoa responsável.
+        </p>
+
+        <p>
+            Os materiais não utilizados deverão ter sua situação atualizada
+            no registro de estoque. Transferências entre departamentos
+            serão documentadas para preservar o histórico de movimentações
+            e a identificação dos responsáveis.
+        </p>
+
+        <p>
+            A coordenação manterá um quadro consolidado das solicitações
+            atendidas, pendentes e recusadas, além das quantidades
+            disponíveis e dos materiais reservados para pesquisas. Esse
+            quadro servirá para orientar a distribuição dos recursos e
+            identificar necessidades de reposição.
+        </p>
+
+        <p>
+            A prioridade será definida considerando a urgência da
+            ocorrência, a relevância institucional, a disponibilidade de
+            recursos e a possibilidade de atender à demanda sem comprometer
+            atividades já programadas.
+        </p>
+
+        <p>
+            A distribuição também será considerada no planejamento
+            financeiro. Caso a procura por determinada classe ultrapasse a
+            disponibilidade prevista, a coordenação poderá reorganizar o
+            cronograma, ajustar as prioridades de pesquisa e incluir a
+            necessidade de expansão no próximo levantamento orçamentário.
+        </p>
+
+        <h2>VII. Estados de desenvolvimento</h2>
+
+        <p>
+            Cada classe será registrada em um dos seguintes estados:
+        </p>
+
+        <ul>
+            <li>
+                <strong>Em planejamento:</strong>
+                os objetivos e os requisitos gerais estão sendo definidos.
+            </li>
+
+            <li>
+                <strong>Em desenvolvimento:</strong>
+                a linha de pesquisa está ativa, mas ainda não foi
+                incorporada ao sistema de distribuição.
+            </li>
+
+            <li>
+                <strong>Em avaliação:</strong>
+                os resultados estão sendo analisados para determinar a
+                viabilidade e as limitações.
+            </li>
+
+            <li>
+                <strong>Disponível para uso autorizado:</strong>
+                a classe está apta a atender solicitações dentro das
+                condições estabelecidas.
+            </li>
+
+            <li>
+                <strong>Restrita:</strong>
+                a utilização está limitada a atividades ou condições
+                específicas.
+            </li>
+
+            <li>
+                <strong>Suspensa:</strong>
+                a distribuição está interrompida enquanto uma questão
+                técnica, administrativa ou de segurança é avaliada.
+            </li>
+        </ul>
+
+        <p>
+            A alteração do estado de uma classe será registrada pela
+            coordenação, acompanhada da justificativa e dos resultados que
+            fundamentaram a decisão. O histórico das alterações será mantido
+            para permitir a análise da evolução do projeto.
+        </p>
+
+        <p>
+            A Classe A será a primeira linha direcionada à disponibilização
+            operacional. As Classes C, W e X avançarão conforme suas
+            necessidades específicas e os recursos disponíveis.
+        </p>
+
+        <p>
+            O estado de cada classe será revisto durante as avaliações
+            periódicas. Essa revisão permitirá identificar linhas que possam
+            avançar, projetos que necessitem de mais recursos e atividades
+            que devam permanecer em espera até que as condições necessárias
+            estejam disponíveis.
+        </p>
+
+        <div class="cross-reference">
+            <strong>
+                CROSS-REFERENCE / SCD-MNEMOSYNE-INT-003 — PÁGINA 03
+            </strong>
+
+            <br>
+
+            A infraestrutura e os equipamentos, o orçamento de implantação,
+            os custos operacionais, o cronograma de implementação, o
+            acompanhamento e a disposição final encontram-se no documento
+            seguinte deste arquivo.
+        </div>
+
+        <div class="signature">
+            <div class="signature-name">
+                Kade Connors
+            </div>
+
+            <div class="signature-meta">
+                SITE-22 · SCIENTIFIC DEPARTMENT<br>
+                RESPONSÁVEL ATUAL PELO PROJETO MNEMOSYNE
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-number">
+        02 / 03
+    </div>
+
+</div>
+</article>
+
+<div class="document-separator">
+    NEXT DOCUMENT / SAME CASE
+</div>
+
+<article class="document" id="mnemosyne-3">
+<div class="paper-inner">
+
+    <div class="doc-meta">
+        <div class="doc-meta-left">
+            SITE-22 / SCIENTIFIC DEPARTMENT<br>
+            INTERNAL RECORD<br>
+            PROJETO MNEMOSYNE
+        </div>
+
+        <div class="doc-meta-right">
+            SCD-MNEMOSYNE-INT-003<br>
+            CLASSIFICAÇÃO: NÍVEL 2 — ACESSO RESTRITO<br>
+            STATUS: EM DESENVOLVIMENTO
+        </div>
+    </div>
+
+    <h1 class="document-title">
+        Mnemosyne —<br>
+        Infraestrutura,<br>
+        Orçamento e Cronograma
+    </h1>
+
+    <div class="document-subtitle">
+        Custos de implantação, recursos operacionais, etapas de
+        implementação e acompanhamento
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="metadata">
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Documento
+            </div>
+
+            <div class="meta-value">
+                SCD-MNEMOSYNE-INT-003
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Data
+            </div>
+
+            <div class="meta-value">
+                17/10/2026
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Responsável atual
+            </div>
+
+            <div class="meta-value">
+                Kade Connors
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Prioridade
+            </div>
+
+            <div class="meta-value">
+                Média
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <h2>VIII. Infraestrutura e equipamentos</h2>
+
+        <p>
+            A instalação inicial será destinada à pesquisa, análise
+            laboratorial, documentação e armazenamento controlado. Os valores
+            abaixo representam estimativas de aquisição e implantação,
+            expressas em dólares americanos.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Equipamento ou estrutura</th>
+                    <th>Finalidade geral</th>
+                    <th class="num">Custo estimado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sala laboratorial modular ISO 7–8</td>
+                    <td>Ambiente controlado para pesquisa</td>
+                    <td class="num">US$ 100.000</td>
+                </tr>
+                <tr>
+                    <td>Sistema HPLC</td>
+                    <td>Análise e separação de componentes</td>
+                    <td class="num">US$ 30.000</td>
+                </tr>
+                <tr>
+                    <td>Liofilizador laboratorial</td>
+                    <td>Conservação de amostras</td>
+                    <td class="num">US$ 24.000</td>
+                </tr>
+                <tr>
+                    <td>Informática científica</td>
+                    <td>Processamento e análise de dados</td>
+                    <td class="num">US$ 6.000</td>
+                </tr>
+                <tr>
+                    <td>Analisador DLS</td>
+                    <td>Caracterização de partículas</td>
+                    <td class="num">US$ 5.000</td>
+                </tr>
+                <tr>
+                    <td>Homogeneizador e equipamento ultrassônico</td>
+                    <td>Processamento laboratorial geral</td>
+                    <td class="num">US$ 4.000</td>
+                </tr>
+                <tr>
+                    <td>Centrífuga refrigerada</td>
+                    <td>Separação e análise de amostras</td>
+                    <td class="num">US$ 4.000</td>
+                </tr>
+                <tr>
+                    <td>Capela de exaustão química</td>
+                    <td>Proteção durante atividades laboratoriais</td>
+                    <td class="num">US$ 2.000</td>
+                </tr>
+                <tr>
+                    <td>Cabine de fluxo laminar</td>
+                    <td>Manipulação em ambiente controlado</td>
+                    <td class="num">US$ 1.600</td>
+                </tr>
+                <tr>
+                    <td>Balança analítica</td>
+                    <td>Pesagem de precisão</td>
+                    <td class="num">US$ 1.000</td>
+                </tr>
+                <tr>
+                    <td>Vidrarias, pipetas e consumíveis iniciais</td>
+                    <td>Suprimentos gerais</td>
+                    <td class="num">US$ 10.000</td>
+                </tr>
+                <tr class="total">
+                    <td>Subtotal</td>
+                    <td></td>
+                    <td class="num">US$ 187.600</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Os equipamentos serão incorporados conforme a necessidade das
+            atividades previstas. A relação representa uma estimativa
+            inicial de infraestrutura e não implica que todos os itens
+            precisem ser adquiridos simultaneamente.
+        </p>
+
+        <p>
+            A manutenção, a calibração e a reposição de consumíveis deverão
+            ser registradas separadamente do custo de aquisição. A
+            coordenação acompanhará as necessidades de cada equipamento e
+            priorizará a continuidade das atividades já previstas no
+            cronograma.
+        </p>
+
+        <h2>IX. Segurança, armazenamento e adequação</h2>
+
+        <p>
+            Além dos equipamentos de pesquisa, o projeto prevê recursos para
+            controle de acesso, armazenamento restrito e adequação física
+            da instalação.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Finalidade</th>
+                    <th class="num">Custo estimado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cofre biométrico e sistema de controle de acesso</td>
+                    <td>Armazenamento restrito e registro de acesso</td>
+                    <td class="num">US$ 85.000</td>
+                </tr>
+                <tr>
+                    <td>Adequação física, segurança e custódia</td>
+                    <td>Instalação, divisões internas e proteção do
+                    ambiente</td>
+                    <td class="num">US$ 177.400</td>
+                </tr>
+                <tr class="total">
+                    <td>Subtotal</td>
+                    <td></td>
+                    <td class="num">US$ 262.400</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Os materiais deverão permanecer identificados e vinculados aos
+            respectivos registros de estoque. O acesso será limitado aos
+            funcionários autorizados, e as movimentações deverão ser
+            documentadas.
+        </p>
+
+        <p>
+            As condições de armazenamento serão estabelecidas conforme as
+            características de cada material. Alterações de localização,
+            divergências de estoque ou danos deverão ser registrados e
+            encaminhados para avaliação.
+        </p>
+
+        <p>
+            O controle de acesso também deverá permitir a identificação dos
+            funcionários que receberam, transferiram ou devolveram
+            materiais. Esses registros serão utilizados para conferir o
+            estoque e esclarecer divergências durante as revisões
+            periódicas.
+        </p>
+
+        <h2>X. Orçamento de implantação</h2>
+
+        <p>
+            O custo estimado para a implantação inicial do Mnemosyne é de
+            US$ 450.000.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th class="num">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Equipamentos e consumíveis iniciais</td>
+                    <td class="num">US$ 187.600</td>
+                </tr>
+                <tr>
+                    <td>Cofre biométrico e controle de acesso</td>
+                    <td class="num">US$ 85.000</td>
+                </tr>
+                <tr>
+                    <td>Adequação física, segurança e custódia</td>
+                    <td class="num">US$ 177.400</td>
+                </tr>
+                <tr class="total">
+                    <td>Total de implantação</td>
+                    <td class="num">US$ 450.000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            O valor corresponde à estrutura inicial do projeto. Despesas
+            recorrentes, ampliação de instalações e aquisição de
+            equipamentos especializados para novas linhas serão
+            contabilizadas separadamente.
+        </p>
+
+        <p>
+            A coordenação acompanhará o orçamento previsto e o realizado,
+            identificando diferenças entre as estimativas e as despesas
+            efetivas. A distribuição dos recursos poderá ser ajustada de
+            acordo com as necessidades do projeto, mantendo os registros
+            financeiros atualizados.
+        </p>
+
+        <p>
+            As aquisições serão organizadas conforme as prioridades de
+            desenvolvimento e a disponibilidade financeira. Cada despesa
+            deverá estar associada à sua finalidade, permitindo identificar
+            quais partes do orçamento estão relacionadas à implantação, à
+            manutenção ou à expansão.
+        </p>
+
+        <h2>XI. Custos operacionais e expansão</h2>
+
+        <p>
+            A estimativa inicial de pessoal é de US$ 38.000 por mês,
+            destinada à equipe técnica e ao suporte necessário às atividades
+            do projeto.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Despesa</th>
+                    <th class="num">Estimativa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Equipe técnica e suporte mensal</td>
+                    <td class="num">US$ 38.000/mês</td>
+                </tr>
+                <tr>
+                    <td>Equipe técnica em 12 meses, sem reajustes</td>
+                    <td class="num">US$ 456.000/ano</td>
+                </tr>
+                <tr>
+                    <td>Lote inicial de 50 doses da Classe A</td>
+                    <td class="num">US$ 32.500</td>
+                </tr>
+                <tr>
+                    <td>Custo médio estimado por dose no lote inicial</td>
+                    <td class="num">US$ 650</td>
+                </tr>
+                <tr>
+                    <td>Espectrômetro de massa para futura expansão</td>
+                    <td class="num">US$ 120.000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            O custo médio de US$ 650 por dose corresponde à estimativa
+            atribuída ao lote inicial e não representa o custo total de
+            implantação ou operação do Mnemosyne.
+        </p>
+
+        <p>
+            O espectrômetro de massa permanecerá fora do orçamento inicial.
+            Sua aquisição será avaliada em uma etapa posterior,
+            considerando a necessidade analítica, a disponibilidade
+            financeira e o desenvolvimento das linhas de pesquisa.
+        </p>
+
+        <p>
+            As despesas com manutenção, calibração, reposição de
+            consumíveis, armazenamento e atualização dos sistemas serão
+            acompanhadas conforme surgirem necessidades concretas. O
+            orçamento de expansão será atualizado a partir dos registros
+            financeiros e das prioridades definidas pela coordenação.
+        </p>
+
+        <p>
+            Para facilitar o acompanhamento, as despesas serão separadas
+            entre custos iniciais, custos recorrentes e investimentos
+            futuros. Essa divisão permitirá avaliar o custo de manutenção
+            do projeto e identificar quais ampliações poderão ser realizadas
+            sem comprometer as atividades já estabelecidas.
+        </p>
+
+        <h2>XII. Cronograma de implementação</h2>
+
+        <ul>
+            <li>
+                <strong>Etapa I — Implantação:</strong>
+                organização do espaço, aquisição dos equipamentos
+                prioritários, preparação dos registros e definição das
+                responsabilidades da equipe. A Classe A será a prioridade
+                dessa etapa.
+            </li>
+
+            <li>
+                <strong>Etapa II — Avaliação inicial:</strong>
+                consolidação dos registros de pesquisa, avaliação das
+                limitações observadas e identificação das necessidades
+                adicionais. O sistema de solicitações e distribuição será
+                ajustado conforme a demanda institucional.
+            </li>
+
+            <li>
+                <strong>Etapa III — Desenvolvimento complementar:</strong>
+                planejamento das necessidades específicas das Classes C, W
+                e X, com avaliação de infraestrutura, recursos e condições
+                necessárias para cada linha.
+            </li>
+
+            <li>
+                <strong>Etapa IV — Expansão operacional:</strong>
+                ampliação das classes disponíveis conforme os resultados, a
+                capacidade técnica e a demanda identificada. A aquisição de
+                novos equipamentos será considerada durante a revisão
+                financeira.
+            </li>
+
+            <li>
+                <strong>Etapa V — Revisão periódica:</strong>
+                consolidação dos resultados, revisão do orçamento, avaliação
+                das solicitações e atualização das prioridades do projeto.
+            </li>
+        </ul>
+
+        <p>
+            Os prazos serão definidos conforme a disponibilidade de
+            recursos e o avanço de cada etapa. A coordenação manterá o
+            cronograma atualizado e registrará as alterações relevantes.
+        </p>
+
+        <p>
+            A passagem entre etapas será baseada nos resultados obtidos, na
+            disponibilidade de pessoal e na condição da infraestrutura. As
+            atividades poderão avançar em ritmos diferentes quando as
+            necessidades de cada classe justificarem um planejamento
+            separado.
+        </p>
+
+        <h2>XIII. Acompanhamento e responsabilidades</h2>
+
+        <p>
+            Durante a fase inicial, a coordenação do Mnemosyne ficará sob
+            minha responsabilidade, abrangendo a organização das atividades,
+            a distribuição dos recursos, a avaliação das solicitações, o
+            acompanhamento das pesquisas e a administração do orçamento.
+        </p>
+
+        <p>
+            Os responsáveis pelas atividades deverão apresentar registros
+            que permitam acompanhar o andamento do trabalho, identificar
+            necessidades e justificar a utilização dos recursos
+            disponibilizados.
+        </p>
+
+        <p>
+            Os relatórios periódicos consolidarão o estado das classes, a
+            quantidade de solicitações recebidas, as liberações realizadas,
+            as demandas pendentes, a disponibilidade de materiais e as
+            despesas registradas.
+        </p>
+
+        <p>
+            A revisão do projeto considerará os resultados obtidos, a
+            demanda institucional e a capacidade disponível. A coordenação
+            poderá reorganizar prioridades e redistribuir recursos dentro
+            do planejamento estabelecido, registrando as decisões relevantes
+            para acompanhamento institucional.
+        </p>
+
+        <p>
+            A estrutura de responsabilidades será reavaliada conforme o
+            crescimento do Mnemosyne. Caso o volume de atividades exija uma
+            equipe maior ou uma divisão mais específica das funções, poderão
+            ser estabelecidas novas atribuições para os funcionários
+            envolvidos. Até que essa mudança seja formalizada, a coordenação
+            continuará centralizada na função atualmente designada.
+        </p>
+
+        <h2>XIV. Disposição final</h2>
+
+        <p>
+            O Projeto Mnemosyne iniciará suas atividades com foco na Classe
+            A, mantendo as Classes C, W e X como linhas complementares de
+            desenvolvimento. As demais classes permanecerão documentadas
+            para consulta e planejamento futuro.
+        </p>
+
+        <p>
+            A distribuição será realizada por solicitação registrada,
+            avaliação de finalidade, verificação de disponibilidade e
+            decisão documentada. O avanço das classes dependerá do estado
+            de desenvolvimento, dos recursos disponíveis e das
+            necessidades identificadas pelo Site-22.
+        </p>
+
+        <p>
+            Durante a implantação, a coordenação ficará sob minha
+            responsabilidade, abrangendo a organização das pesquisas, a
+            distribuição dos recursos, o acompanhamento dos resultados e a
+            definição das prioridades seguintes. Essa atribuição corresponde
+            à estrutura inicial do projeto e poderá ser revista futuramente
+            conforme a expansão das atividades e a necessidade de
+            redistribuição das funções.
+        </p>
+
+        <div class="result">
+
+            <div class="result-head">
+                <span>
+                    DOCUMENT SUMMARY
+                </span>
+
+                <span>
+                    SCD-MNEMOSYNE-INT-003
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    FOCO INICIAL
+                </span>
+
+                <span>
+                    Classe A — Retrógrado Geral.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    IMPLANTAÇÃO
+                </span>
+
+                <span>
+                    US$ 450.000 (estimativa inicial).
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    PRÓXIMO PASSO
+                </span>
+
+                <span>
+                    Etapa I — organização do espaço, aquisição dos
+                    equipamentos prioritários e preparação dos registros.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="signature">
+            <div class="signature-name">
+                Kade Connors
+            </div>
+
+            <div class="signature-meta">
+                SITE-22 · SCIENTIFIC DEPARTMENT<br>
+                RESPONSÁVEL ATUAL PELO PROJETO MNEMOSYNE
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-number">
+        03 / 03
+    </div>
+
+</div>
+</article>
+
+</main>
+
+<script>
+function updateClock() {
+    const now = new Date();
+
+    const h = String(now.getHours()).padStart(2, "0");
+    const m = String(now.getMinutes()).padStart(2, "0");
+    const s = String(now.getSeconds()).padStart(2, "0");
+
+    document.getElementById("clock").textContent =
+        `${h}:${m}:${s}`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+function scrollToDoc(id) {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+const archiveFiles =
+    document.querySelectorAll(".archive-file");
+
+const documents =
+    document.querySelectorAll(".document");
+
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            const id = entry.target.id;
+
+            archiveFiles.forEach(file => {
+                file.classList.toggle(
+                    "active",
+                    file.dataset.target === id
+                );
+            });
+        });
+    },
+    {
+        threshold: 0.25
+    }
+);
+
+documents.forEach(document => {
+    observer.observe(document);
+});
+</script>
+
+</body>
+</html>
